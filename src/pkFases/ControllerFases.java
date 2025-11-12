@@ -5,7 +5,7 @@ public class ControllerFases {
     fase3 f3 = new fase3();
     fase4 f4 = new fase4();
     public void IniciarFases(){
-        f1.ejecutar();
-
+        //f1.ejecutar();
+        f4.comaFlotante();
     }
 }
