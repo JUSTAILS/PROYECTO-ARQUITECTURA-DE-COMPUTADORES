@@ -1,10 +1,13 @@
 package pkFases;
 
 import java.util.Scanner;
-
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 public class fase4 {
     Scanner input = new Scanner(System.in);
     fase1 f1 = new fase1();
+    fase2 f2 = new fase2();
+
 
     public void comaFlotante() {    
     System.out.println("\n==Conversion y representacion numerica en coma flotante==\n");
@@ -21,6 +24,7 @@ public class fase4 {
         case 2:
             System.out.print("Ingresa el numero en coma flotante a convertir: ");
             String flotante = input.next();
+            comaFlotanteADecimal(flotante);
             break;
 
         default:
@@ -84,10 +88,12 @@ public class fase4 {
 
         // 8. Calcular exponente sesgado
         int exponenteSesgado = exponente + 127;
-        System.out.println("Exponente sin sesgar: " + exponente);
-        System.out.print("Exponente sesgado (decimal): " + exponenteSesgado + "\n Exponente sesgado (binario): ");
+        f1.limpiarBinario();
         f1.decimalABinario(exponenteSesgado);
-        System.out.println();
+        String exponenteSesgados = f1.getBinario();
+        System.out.println("Exponente sin sesgar: " + exponente);
+        System.out.print("Exponente sesgado (decimal): " + exponenteSesgado + "\n Exponente sesgado (binario): " + exponenteSesgados);
+        
 
 
         // 9. Mostrar mantisa (23 bits)
@@ -104,8 +110,67 @@ public class fase4 {
 
         // 10. Mostrar representación final IEEE 754
         System.out.println("\nRepresentación IEEE 754 (32 bits): ");
-        System.out.println( signo +  Integer.toBinaryString(exponenteSesgado) + mantisa23);
+        System.out.println( signo + exponenteSesgados + mantisa23);
 
     }
 
+    public void comaFlotanteADecimal(String numero) {
+        System.out.println("\n--- CONVERSIÓN COMA FLOTANTE A DECIMAL ---");
+
+        //1. Determinar el signo
+        if(numero.charAt(0) == '1') {
+            System.out.println("El numero es: -");
+        } else if (numero.charAt(0) == '0') {
+            System.out.println("El numero es: +");
+        } else {
+            System.out.println("Formato invalido.");
+            return;
+        }
+
+        // 2. Extraer exponente
+        String exponenteBin = numero.substring(1, 9);
+        System.out.println("Exponente (binario): " + exponenteBin);
+
+        InputStream entradaOriginal = System.in;
+        try {
+            // Crear un flujo de datos que contenga el valor que queremos pasar
+            ByteArrayInputStream entradaFalsa = new ByteArrayInputStream((exponenteBin + "\n").getBytes());
+            System.setIn(entradaFalsa); // redirigir System.in temporalmente
+
+            // Llamar al método que pide un número desde consola
+            f2.binToDec(); // se ejecutará con el valor simulado
+
+        } finally {
+            System.setIn(entradaOriginal); // restaurar System.in siempre
+        }
+
+        // 3. Calcular el exponente real (hacemos nuestro propio parse)
+        int exponenteDecimal = Integer.parseInt(exponenteBin, 2);
+        int exponenteCalculo = exponenteDecimal - 127;
+        System.out.println("Exponente sesgado: " + exponenteDecimal);
+        System.out.println("Exponente real (sin sesgo): " + exponenteCalculo);
+
+        // 4. Extraer mantisa
+        String mantisaBin = numero.substring(9, 32);
+        System.out.println("Mantisa en binario sin normalizar 1." + mantisaBin);
+
+        double mantisaBinaria = Double.parseDouble(mantisaBin);
+        double valorNormalizado = mantisaBinaria * Math.pow(10, -24);
+        double valorNormalizadoCompleto = (1 + valorNormalizado) * Math.pow(10, exponenteCalculo);
+        System.out.println("Mantisa en decimal: " + valorNormalizadoCompleto);
+
+        // Convertir mantisa binaria a decimal
+        double mantisaDecimal = 1.0;
+        for (int i = 0; i < mantisaBin.length(); i++) {
+            if (mantisaBin.charAt(i) == '1') {
+                mantisaDecimal += Math.pow(2, -(i + 1));
+            }
+        }
+        
+        // 5. Calcular valor final
+        double valorDecimal = mantisaDecimal * Math.pow(2, exponenteCalculo);
+        if (numero.charAt(0) == '1') valorDecimal *= -1;
+
+        System.out.println("Valor decimal aproximado: " + valorDecimal);
+    }
 }
