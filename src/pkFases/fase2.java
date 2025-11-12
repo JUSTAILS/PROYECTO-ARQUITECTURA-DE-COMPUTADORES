@@ -11,7 +11,7 @@ public class fase2 {
     public void mostrarMenu() {
         do {
         
-            System.out.println("=== Conversor de Bases ===\n1. Binario a Decimal\n2. Octal a Decimal\n3. Hexadecimal a Decimal\n4. Salir");
+            System.out.println("=== Conversor de Bases a decimal ===\n1. Binario a Decimal\n2. Octal a Decimal\n3. Hexadecimal a Decimal\n4. Salir");
             System.out.println("Ingrese una opcion: ");
             opcion = sc.nextInt();
 
