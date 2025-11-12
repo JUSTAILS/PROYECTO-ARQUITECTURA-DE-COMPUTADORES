@@ -1,8 +1,10 @@
 package pkFases;
 import java.util.Scanner;
 
+
 public class fase1 {
     Scanner input = new Scanner(System.in);
+    public String binario = "";
 
     public void ejecutar() {
         System.out.println("\n==CONVERTIR A OTROS SISTEMAS NUMERICOS==\n");
@@ -55,6 +57,14 @@ public class fase1 {
             else
                 System.out.print((char) ('A' + (resto - 10)));
         }
+    }
+
+    public String getBinario() {
+        return binario;
+    }
+
+    public void limpiarBinario() {
+        binario = "";
     }
 
     public int ingresar() {
