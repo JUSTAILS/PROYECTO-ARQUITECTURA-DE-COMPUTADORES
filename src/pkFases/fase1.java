@@ -14,8 +14,7 @@ public class fase1 {
         switch (entrada) {
             case 1:
                 int n1 = ingresar();
-                System.out.print("Resultado en binario: ");
-                decimalABinario(n1);
+                System.out.print("Resultado en binario: "+decimalABinario(n1));
                 break;
             case 2:
                 int n2 = ingresar();
@@ -44,12 +43,11 @@ public class fase1 {
         System.out.println(); 
     }
 
-    public void decimalABinario(int n) {
-        if (n > 0) {
-            decimalABinario(n / 2);
-            System.out.print(n % 2);
-        }
+    public int decimalABinario(int n) {
+    if (n == 0) return 0;
+    return n % 2 + 10 * decimalABinario(n / 2);
     }
+
 
     public void decimalAOctal(int n) {
         if (n > 0) {
