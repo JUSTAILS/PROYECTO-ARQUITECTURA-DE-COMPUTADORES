@@ -41,7 +41,7 @@ public class fase2 {
         } while(opcion != 4);
     }
 
-    public void binToDec(){
+    public int binToDec(){
         System.out.println("Ingrese un numero binario: ");
         
         //String bin = ""; //Prueba numero binario
@@ -61,9 +61,10 @@ public class fase2 {
         if(sum != -1){
             System.out.println("El numero decimal es: " + sum + "\n");   
         }
+        return sum;
     }
 
-    public void octToDec(){
+    public int octToDec(){
         System.out.println("Ingrese un numero octal: ");
 
         
@@ -84,9 +85,10 @@ public class fase2 {
         if(sum != -1){
             System.out.println("El numero decimal es: " + sum + "\n");   
         }
+        return sum;
     }
 
-    public void hexToDec(){
+    public int hexToDec(){
         System.out.println("Ingrese un numero hexadecimal: ");
 
         //String hex = ""; //Prueba numero hexadecimal
@@ -106,5 +108,6 @@ public class fase2 {
         if(sum != -1){
             System.out.println("El numero decimal es: " + sum + "\n");   
         }
+        return sum;
     }
 }
