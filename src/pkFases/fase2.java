@@ -19,7 +19,7 @@ public class fase2 {
                 case 1:
                     sum = 0;
                     sc.nextLine(); // Limpiar el buffer
-                    binToDec();
+                    //binToDec(bin); Necesito que desde aca se llame al paremtro
                     break;
                 case 2:
                     sum = 0;
@@ -41,26 +41,22 @@ public class fase2 {
         } while(opcion != 4);
     }
 
-    public int binToDec(){
-        System.out.println("Ingrese un numero binario: ");
-        
+    public int binToDec(String bin){
+        int sum = 0;
         //String bin = ""; //Prueba numero binario
-        String bin = sc.nextLine();
+        //String bin = sc.nextLine(); No uses para llamar al parametro desde aca, me da errores
 
         for(int i=0; i<bin.length(); i++){
             char c = bin.charAt(i);
             if(c != '0' && c != '1'){
                System.out.println("El numero ingresado no es binario\n");
-               sum = -1;
-               break;
+               return -1;
             } else {
                 term = Character.getNumericValue(c) * (int)Math.pow(2, bin.length() - 1 - i);
                 sum += term;
             }
         }
-        if(sum != -1){
-            System.out.println("El numero decimal es: " + sum + "\n");   
-        }
+        //System.out.println("El numero decimal es: " + sum + "\n"); esta linea ponla en el menu
         return sum;
     }
 

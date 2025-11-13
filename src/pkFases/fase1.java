@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class fase1 {
     Scanner input = new Scanner(System.in);
-    public String binario = "";
 
     public void ejecutar() {
         System.out.println("==CONVERTIR DECIMAL A OTRAS BASES==");
@@ -44,8 +43,8 @@ public class fase1 {
     }
 
     public int decimalABinario(int n) {
-    if (n == 0) return 0;
-    return n % 2 + 10 * decimalABinario(n / 2);
+        if (n == 0) return 0;
+        return n % 2 + 10 * decimalABinario(n / 2);
     }
 
 
@@ -65,14 +64,6 @@ public class fase1 {
             else
                 System.out.print((char) ('A' + (resto - 10)));
         }
-    }
-
-    public String getBinario() {
-        return binario;
-    }
-
-    public void limpiarBinario() {
-        binario = "";
     }
 
     public int ingresar() {

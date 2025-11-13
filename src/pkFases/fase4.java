@@ -1,8 +1,7 @@
 package pkFases;
 
 import java.util.Scanner;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+
 public class fase4 {
     Scanner input = new Scanner(System.in);
     fase1 f1 = new fase1();
@@ -51,31 +50,36 @@ public class fase4 {
         System.out.println("Parte fraccionaria: " + parteFraccionaria);
 
         // 3. Convertir parte entera a binario usando fase1
+        int bin = 0;
         System.out.print("Parte entera en binario: ");
         if (parteEntera == 0) {
             System.out.println("0");
         } else {
-            f1.decimalABinario(parteEntera);
-            System.out.println();
+            bin = f1.decimalABinario(parteEntera);
+            System.out.println(bin);
         }
 
         // 4. Convertir parte fraccionaria a binario (máx. 10 bits)
         String binFrac = "";
         double fraccion = parteFraccionaria;
-        for (int i = 0; i < 10 && fraccion != 0; i++) {
-            fraccion *= 2;
-            if (fraccion >= 1) {
-                binFrac += "1";
-                fraccion -= 1;
-            } else {
-                binFrac += "0";
+        if(fraccion == 0) {
+            System.out.print("Parte fraccionaria en binario: 0.0\n");
+            return;
+        } else {
+            for (int i = 0; i < 10 && fraccion != 0; i++) {
+                fraccion *= 2;
+                if (fraccion >= 1) {
+                    binFrac += "1";
+                    fraccion -= 1;
+                } else {
+                    binFrac += "0";
+                }
             }
+            System.out.print("Parte fraccionaria en binario: 0." + binFrac + "\n");
         }
-        System.out.print("Parte fraccionaria en binario: 0." + binFrac + "\n");
-
-
+        
         // 5. Obtener cadena completa del binario
-        String binEnteraStr = (parteEntera == 0) ? "0" : Integer.toBinaryString(parteEntera);
+        String binEnteraStr = String.valueOf(bin);
         String binarioCompleto = binEnteraStr + "." + binFrac;
 
         // 6. Normalizar (forma 1.xxxxx × 2^e)
@@ -88,14 +92,10 @@ public class fase4 {
 
         // 8. Calcular exponente sesgado
         int exponenteSesgado = exponente + 127;
-        f1.limpiarBinario();
-        f1.decimalABinario(exponenteSesgado);
-        String exponenteSesgados = f1.getBinario();
+        int exponenteSesgados = f1.decimalABinario(exponenteSesgado);
         System.out.println("Exponente sin sesgar: " + exponente);
-        System.out.print("Exponente sesgado (decimal): " + exponenteSesgado + "\n Exponente sesgado (binario): " + exponenteSesgados);
+        System.out.print("Exponente sesgado (decimal): " + exponenteSesgado + "\nExponente sesgado (binario): " + exponenteSesgados);
         
-
-
         // 9. Mostrar mantisa (23 bits)
         String mantisa23 = mantisa;
         if (mantisa23.length() > 23) {
@@ -106,7 +106,7 @@ public class fase4 {
             }
         }
 
-        System.out.println("Mantisa (23 bits): " + mantisa23);
+        System.out.println("\nMantisa (23 bits): " + mantisa23);
 
         // 10. Mostrar representación final IEEE 754
         System.out.println("\nRepresentación IEEE 754 (32 bits): ");
@@ -118,10 +118,13 @@ public class fase4 {
         System.out.println("\n--- CONVERSIÓN COMA FLOTANTE A DECIMAL ---");
 
         //1. Determinar el signo
+        String signo = "";
         if(numero.charAt(0) == '1') {
-            System.out.println("El numero es: -");
+            signo = "-";
+            System.out.println("El signo es: " + signo);
         } else if (numero.charAt(0) == '0') {
-            System.out.println("El numero es: +");
+            signo = "+";
+            System.out.println("El signo es: " + signo);
         } else {
             System.out.println("Formato invalido.");
             return;
@@ -130,47 +133,75 @@ public class fase4 {
         // 2. Extraer exponente
         String exponenteBin = numero.substring(1, 9);
         System.out.println("Exponente (binario): " + exponenteBin);
-
-        InputStream entradaOriginal = System.in;
-        try {
-            // Crear un flujo de datos que contenga el valor que queremos pasar
-            ByteArrayInputStream entradaFalsa = new ByteArrayInputStream((exponenteBin + "\n").getBytes());
-            System.setIn(entradaFalsa); // redirigir System.in temporalmente
-
-            // Llamar al método que pide un número desde consola
-            f2.binToDec(); // se ejecutará con el valor simulado
-
-        } finally {
-            System.setIn(entradaOriginal); // restaurar System.in siempre
-        }
-
-        // 3. Calcular el exponente real (hacemos nuestro propio parse)
-        int exponenteDecimal = Integer.parseInt(exponenteBin, 2);
-        int exponenteCalculo = exponenteDecimal - 127;
-        System.out.println("Exponente sesgado: " + exponenteDecimal);
+        int exponenteDec = f2.binToDec(exponenteBin);
+        
+        // 3. Calcular el exponente real 
+        int exponenteCalculo = exponenteDec - 127;
+        System.out.println("Exponente sesgado: " + exponenteDec);
         System.out.println("Exponente real (sin sesgo): " + exponenteCalculo);
 
         // 4. Extraer mantisa
         String mantisaBin = numero.substring(9, 32);
         System.out.println("Mantisa en binario sin normalizar 1." + mantisaBin);
 
-        double mantisaBinaria = Double.parseDouble(mantisaBin);
-        double valorNormalizado = mantisaBinaria * Math.pow(10, -24);
-        double valorNormalizadoCompleto = (1 + valorNormalizado) * Math.pow(10, exponenteCalculo);
-        System.out.println("Mantisa en decimal: " + valorNormalizadoCompleto);
+        double mantisaBinaria = Double.parseDouble(mantisaBin); //paso a double la mantisa
+        double valorNormalizado = mantisaBinaria * Math.pow(10, -23); //ajusto la mantisa para que se 0.xxxx
+        double resultado = cifrasSignificativas(valorNormalizado, 10); //limito a 10 cifras significativas
+        double valorNormalizadoCompleto = (1 + resultado) * Math.pow(10, exponenteCalculo); //agrego el 1 de la normalizacion y aplico el exponente
+        double resultadoFinal = cifrasSignificativas(valorNormalizadoCompleto, 10); //limito a 10 cifras significativas el resultado final
+        System.out.println("Mantisa en binaria normalizada: " + resultadoFinal);
 
-        // Convertir mantisa binaria a decimal
-        double mantisaDecimal = 1.0;
-        for (int i = 0; i < mantisaBin.length(); i++) {
-            if (mantisaBin.charAt(i) == '1') {
-                mantisaDecimal += Math.pow(2, -(i + 1));
-            }
+        // 5. Separar parte entera y fraccionaria
+        int parteEntera = (int) resultadoFinal;
+        double parteFraccionaria = resultadoFinal - parteEntera;
+        double resultadoFracc = cifrasSignificativas(parteFraccionaria, 10);
+
+        System.out.println("Parte entera: " + parteEntera);
+        System.out.println("Parte fraccionaria: " + resultadoFracc);
+
+        // 6. Convertir parte entera a decimal usando fase2
+        double dec = 0;
+        System.out.print("Parte entera en decimal: ");
+        if (parteEntera == 0) {
+            System.out.println("0");
+        } else {
+            String parteEnteraString = String.valueOf(parteEntera);
+            dec = f2.binToDec(parteEnteraString);
+            System.out.println(dec);
+        }
+
+        // 7. Convertir parte decimal binaria a decimal decimal 
+        String parteFracString = String.valueOf(resultadoFracc);
+        parteFracString = parteFracString.replace(",", "."); // reemplaza coma por punto
+        int punto = parteFracString.indexOf('.'); // Extrae solo los dígitos después del punto
+        if (punto != -1 && punto < parteFracString.length() - 1) {
+            parteFracString = parteFracString.substring(punto + 1);
+        } else {
+            parteFracString = "0";
         }
         
-        // 5. Calcular valor final
-        double valorDecimal = mantisaDecimal * Math.pow(2, exponenteCalculo);
-        if (numero.charAt(0) == '1') valorDecimal *= -1;
+        double decimalfrac = 0.0;
+        for (int i = 0; i < parteFracString.length(); i++) {
+            char c = parteFracString.charAt(i);
+            if (c == '1') {
+                decimalfrac += Math.pow(2, -(i + 1));
+            }
+        }
+        System.out.println("Parte fraccionaria en decimal: " + decimalfrac);
 
+        // 8. Calcular valor final
+        String valorDecimal = signo + (dec + decimalfrac);
         System.out.println("Valor decimal aproximado: " + valorDecimal);
     }
+
+    //Metodo para limitar cifras significativas
+    public static double cifrasSignificativas(double valor, int cifras) {
+        if (valor == 0) return 0;
+        final double d = Math.ceil(Math.log10(valor < 0 ? -valor : valor));
+        final int power = cifras - (int) d;
+        final double magnitude = Math.pow(10, power);
+        final long shifted = Math.round(valor * magnitude);
+        return shifted / magnitude;
+    }
+
 }
