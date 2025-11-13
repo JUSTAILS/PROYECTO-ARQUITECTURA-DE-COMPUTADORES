@@ -9,26 +9,27 @@ public class fase4 {
 
 
     public void comaFlotante() {    
-    System.out.println("\n==Conversion y representacion numerica en coma flotante==\n");
-    System.out.print("1. Decimal a coma flotante \n2. Coma flotante a decimal\nSelecciona una opcion: ");
-    int opcion = input.nextInt();
+        System.out.println("\n==Conversion y representacion numerica en coma flotante==");
+        System.out.print("1. Decimal a coma flotante \n2. Coma flotante a decimal\nSelecciona una opcion: ");
+        int opcion = input.nextInt();
 
-    switch (opcion) {
-        case 1:
-            System.out.print("Ingresa un numero decimal a convertir: ");
-            double decimal = input.nextDouble();
-            decimalAComaFlotante(decimal);
-            break;
+        switch (opcion) {
+            case 1:
+                System.out.print("Ingresa un numero decimal a convertir: ");
+                double decimal = input.nextDouble();
+                decimalAComaFlotante(decimal);
+                break;
         
-        case 2:
-            System.out.print("Ingresa el numero en coma flotante a convertir: ");
-            String flotante = input.next();
-            comaFlotanteADecimal(flotante);
-            break;
+            case 2:
+                System.out.print("Ingresa el numero en coma flotante a convertir: ");
+                    String flotante = input.next();
+                comaFlotanteADecimal(flotante);
+                break;
 
-        default:
-            System.out.println("Opcion no valida.");
-            break;
+            default:
+                System.out.println("Opcion no valida. Intente de nuevo.");
+                System.err.println("Volviendo al menu.....");
+                break;
         }
     }
 
@@ -45,9 +46,10 @@ public class fase4 {
         // 2. Separar parte entera y fraccionaria
         int parteEntera = (int) numero;
         double parteFraccionaria = numero - parteEntera;
+        double resultado = cifrasSignificativas(parteFraccionaria, 10);
 
         System.out.println("Parte entera: " + parteEntera);
-        System.out.println("Parte fraccionaria: " + parteFraccionaria);
+        System.out.println("Parte fraccionaria: " + resultado);
 
         // 3. Convertir parte entera a binario usando fase1
         int bin = 0;
@@ -61,10 +63,10 @@ public class fase4 {
 
         // 4. Convertir parte fraccionaria a binario (máx. 10 bits)
         String binFrac = "";
-        double fraccion = parteFraccionaria;
+        double fraccion = resultado;
         if(fraccion == 0) {
             System.out.print("Parte fraccionaria en binario: 0.0\n");
-            return;
+            binFrac = "0";
         } else {
             for (int i = 0; i < 10 && fraccion != 0; i++) {
                 fraccion *= 2;
@@ -93,8 +95,8 @@ public class fase4 {
         // 8. Calcular exponente sesgado
         int exponenteSesgado = exponente + 127;
         int exponenteSesgados = f1.decimalABinario(exponenteSesgado);
-        System.out.println("Exponente sin sesgar: " + exponente);
-        System.out.print("Exponente sesgado (decimal): " + exponenteSesgado + "\nExponente sesgado (binario): " + exponenteSesgados);
+        System.out.println("Numero del exponente: " + exponente);
+        System.out.print("Exponente sesgado (decimal) 127 + expoente: " + exponenteSesgado + "\nExponente sesgado (binario): " + exponenteSesgados);
         
         // 9. Mostrar mantisa (23 bits)
         String mantisa23 = mantisa;
@@ -126,7 +128,7 @@ public class fase4 {
             signo = "+";
             System.out.println("El signo es: " + signo);
         } else {
-            System.out.println("Formato invalido.");
+            System.out.println("Formato invalido. Intente denuevo.");
             return;
         }
 
@@ -154,7 +156,7 @@ public class fase4 {
         // 5. Separar parte entera y fraccionaria
         int parteEntera = (int) resultadoFinal;
         double parteFraccionaria = resultadoFinal - parteEntera;
-        double resultadoFracc = cifrasSignificativas(parteFraccionaria, 10);
+        double resultadoFracc = cifrasSignificativas(parteFraccionaria, 6);
 
         System.out.println("Parte entera: " + parteEntera);
         System.out.println("Parte fraccionaria: " + resultadoFracc);

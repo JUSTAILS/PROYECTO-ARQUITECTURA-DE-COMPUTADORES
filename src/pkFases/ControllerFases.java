@@ -40,7 +40,7 @@ public class ControllerFases {
                     entrada.close();
                     break;
                 default:
-                    System.out.println("Opción no válida.");
+                    System.out.println("Opción no válida. Intente de nuevo.");
             }
         }
     }
