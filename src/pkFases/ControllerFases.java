@@ -29,7 +29,7 @@ public class ControllerFases {
                     f2.mostrarMenu();
                     break;
                 case 3:
-                    // f3.ejecutar();
+                    f3.ejecutar();
                     break;
                 case 4:
                     f4.comaFlotante();

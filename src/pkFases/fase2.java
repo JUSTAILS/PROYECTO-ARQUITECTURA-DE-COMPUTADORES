@@ -2,7 +2,7 @@ package pkFases;
 
 import java.util.Scanner;
 
-public class fase2 {
+public class fase2 { //JUSTIN GUEVARA
     int opcion = 0;
     int term = 0;
     int sum = 0;
@@ -17,19 +17,34 @@ public class fase2 {
 
             switch(opcion){
                 case 1:
+                    System.out.println("Ingrese un numero binario: ");
+                    String bin = sc.next();
                     sum = 0;
                     sc.nextLine(); // Limpiar el buffer
-                    //binToDec(bin); Necesito que desde aca se llame al paremtro
+                    binToDec(bin);
+                    if(sum != -1){
+                        System.out.println("El numero decimal es: " + sum + "\n");
+                    }
                     break;
                 case 2:
+                    System.out.println("Ingrese un numero octal: ");
+                    String oct = sc.next();
                     sum = 0;
                     sc.nextLine(); // Limpiar el buffer
-                    octToDec();
+                    octToDec(oct);
+                    if(sum != -1){
+                        System.out.println("El numero decimal es: " + sum + "\n");   
+                    }
                     break;
                 case 3:
+                    System.out.println("Ingrese un numero hexadecimal: ");
+                    String hex = sc.next();
                     sum = 0;
                     sc.nextLine(); // Limpiar el buffer
-                    hexToDec();
+                    hexToDec(hex);
+                    if(sum != -1){
+                        System.out.println("El numero decimal es: " + sum + "\n");   
+                    }
                     break;
                 case 4:
                     System.out.println("Saliendo...");
@@ -42,9 +57,7 @@ public class fase2 {
     }
 
     public int binToDec(String bin){
-        int sum = 0;
         //String bin = ""; //Prueba numero binario
-        //String bin = sc.nextLine(); No uses para llamar al parametro desde aca, me da errores
 
         for(int i=0; i<bin.length(); i++){
             char c = bin.charAt(i);
@@ -56,16 +69,11 @@ public class fase2 {
                 sum += term;
             }
         }
-        //System.out.println("El numero decimal es: " + sum + "\n"); esta linea ponla en el menu
         return sum;
     }
 
-    public int octToDec(){
-        System.out.println("Ingrese un numero octal: ");
-
-        
+    public int octToDec(String oct){
         //String oct = ""; //Prueba numero octal
-        String oct = sc.nextLine();
 
         for(int i=0; i<oct.length(); i++){
             char c = oct.charAt(i);
@@ -78,17 +86,11 @@ public class fase2 {
                 sum += term;
             }
         }
-        if(sum != -1){
-            System.out.println("El numero decimal es: " + sum + "\n");   
-        }
         return sum;
     }
 
-    public int hexToDec(){
-        System.out.println("Ingrese un numero hexadecimal: ");
-
+    public int hexToDec(String hex){
         //String hex = ""; //Prueba numero hexadecimal
-        String hex = sc.nextLine();
 
         for(int i=0; i<hex.length(); i++){
             char c = hex.charAt(i);
@@ -100,9 +102,6 @@ public class fase2 {
                 term = Character.getNumericValue(c) * (int)Math.pow(16, hex.length() - 1 - i);
                 sum += term;
             }
-        }
-        if(sum != -1){
-            System.out.println("El numero decimal es: " + sum + "\n");   
         }
         return sum;
     }
