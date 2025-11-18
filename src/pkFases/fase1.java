@@ -46,6 +46,9 @@ public class fase1 {
                 System.out.print("\nHexadecimal: ");
                 decimalAHexadecimal(n4);
                 break;
+            case 5:
+                System.out.println("Saliendo...");
+                break;
             default:
                 System.out.println("Opción no válida.");
         }

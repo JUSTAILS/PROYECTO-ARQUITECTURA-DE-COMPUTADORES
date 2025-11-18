@@ -11,7 +11,7 @@ public class fase4 {
     public void comaFlotante() {    
         System.out.println("\n==Conversion y representacion numerica en coma flotante==");
         System.out.println("No olvides colocar una ',' para separar los decimales.");
-        System.out.print("1. Decimal a coma flotante \n2. Coma flotante a decimal\nSelecciona una opcion: ");
+        System.out.print("1. Decimal a coma flotante \n2. Coma flotante a decimal \n3. Salir \nSelecciona una opcion: ");
         int opcion = input.nextInt();
 
         switch (opcion) {
@@ -25,6 +25,10 @@ public class fase4 {
                 System.out.print("Ingresa el numero en coma flotante a convertir: ");
                     String flotante = input.next();
                 comaFlotanteADecimal(flotante);
+                break;
+
+            case 3:
+                System.out.println("Saliendo...");
                 break;
 
             default:
