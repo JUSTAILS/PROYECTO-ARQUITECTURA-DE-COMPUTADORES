@@ -40,8 +40,7 @@ public class fase1 {
             case 4:
                 int n4 = ingresar();
                 System.out.println("Resultado en todas las bases");
-                System.out.print("Binario: ");
-                decimalABinario(n4);
+                System.out.print("Binario: "+convertirABinarioString(n4));
                 System.out.print("\nOctal: ");
                 decimalAOctal(n4);
                 System.out.print("\nHexadecimal: ");
