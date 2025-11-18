@@ -10,6 +10,7 @@ public class fase4 {
 
     public void comaFlotante() {    
         System.out.println("\n==Conversion y representacion numerica en coma flotante==");
+        System.out.println("No olvides colocar una ',' para separar los decimales.");
         System.out.print("1. Decimal a coma flotante \n2. Coma flotante a decimal\nSelecciona una opcion: ");
         int opcion = input.nextInt();
 
@@ -52,7 +53,7 @@ public class fase4 {
         System.out.println("Parte fraccionaria: " + resultado);
 
         // 3. Convertir parte entera a binario usando fase1
-        int bin = 0;
+        String bin = "";
         System.out.print("Parte entera en binario: ");
         if (parteEntera == 0) {
             System.out.println("0");
@@ -94,9 +95,9 @@ public class fase4 {
 
         // 8. Calcular exponente sesgado
         int exponenteSesgado = exponente + 127;
-        int exponenteSesgados = f1.decimalABinario(exponenteSesgado);
+        String exponenteSesgados = f1.decimalABinario(exponenteSesgado);
         System.out.println("Numero del exponente: " + exponente);
-        System.out.print("Exponente sesgado (decimal) 127 + expoente: " + exponenteSesgado + "\nExponente sesgado (binario): " + exponenteSesgados);
+        System.out.print("Exponente sesgado (decimal) 127 + exponente: " + exponenteSesgado + "\nExponente sesgado (binario): " + exponenteSesgados);
         
         // 9. Mostrar mantisa (23 bits)
         String mantisa23 = mantisa;

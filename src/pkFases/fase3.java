@@ -38,8 +38,7 @@ public class fase3 {
         }
         if (numero >= 0) {
             // Positivo:se usamo decimalABinario de fase1
-            int binInt = f1.decimalABinario(numero);    
-            String bin = Integer.toString(binInt);     
+            String bin = f1.decimalABinario(numero);     
             while (bin.length() < n) {
                 bin = "0" + bin;
             }
@@ -48,8 +47,7 @@ public class fase3 {
             // Negativo: usar método de Ca2
             int valorAbs = -numero; // |X|
             // se usa decimalABinario de fase1
-            int binIntAbs = f1.decimalABinario(valorAbs);
-            String binAbs = Integer.toString(binIntAbs);
+            String binAbs = f1.decimalABinario(valorAbs);
             // Rellenar con ceros hasta tener n bits seleccionado
             while (binAbs.length() < n) {
                 binAbs = "0" + binAbs;

@@ -25,7 +25,7 @@ public class fase1 {
         switch (entrada) {
             case 1:
                 int n1 = ingresar();
-                System.out.print("Resultado en binario: "+convertirABinarioString(n1));
+                System.out.print("Resultado en binario: "+decimalABinario(n1));
                 break;
             case 2:
                 int n2 = ingresar();
@@ -40,7 +40,7 @@ public class fase1 {
             case 4:
                 int n4 = ingresar();
                 System.out.println("Resultado en todas las bases");
-                System.out.print("Binario: "+convertirABinarioString(n4));
+                System.out.print("Binario: "+decimalABinario(n4));
                 System.out.print("\nOctal: ");
                 decimalAOctal(n4);
                 System.out.print("\nHexadecimal: ");
@@ -53,16 +53,9 @@ public class fase1 {
         System.out.println(); 
     }
 
-    public int decimalABinario(int n) {
-        if (n == 0) return 0;
-
-        String binario = convertirABinarioString(n);
-        return Integer.parseInt(binario);
-    }
-
-    private String convertirABinarioString(int n) {
+    public String decimalABinario(int n) {
         if (n == 0) return "";
-        return convertirABinarioString(n / 2) + (n % 2);
+        return decimalABinario(n / 2) + (n % 2);
     }
 
 
