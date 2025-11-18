@@ -1,26 +1,40 @@
 package pkFases;
 import java.util.Scanner;
+
 public class ControllerFases {
+
     fase1 f1 = new fase1();
     fase2 f2 = new fase2();
     fase3 f3 = new fase3();
     fase4 f4 = new fase4();
-    public void IniciarFases(){
+
+    public void IniciarFases() {
+
         Scanner entrada = new Scanner(System.in);
         boolean salir = false;
+
         while (!salir) {
+
             System.out.println("\n==PROYECTO ARQUITECTURA DE COMPUTADORES==");
             System.out.print(
-            "\nSelecciona la fase a ejecutar\n" +
-            "1. Decimal a otras bases\n" +
-            "2. Otras bases a Decimal\n" +
-            "3. Aritmética binaria y complemento a Dos\n" +
-            "4. Representación en coma flotante\n" +
-            "5. Salir\n" +
-            "Ingresa una opción: "
-        );
+                "\nSelecciona la fase a ejecutar\n" +
+                "1. Decimal a otras bases\n" +
+                "2. Otras bases a Decimal\n" +
+                "3. Aritmética binaria y complemento a Dos\n" +
+                "4. Representación en coma flotante\n" +
+                "5. Salir\n" +
+                "Ingresa una opción: "
+            );
+
+            if (!entrada.hasNextInt()) {
+                System.out.println("Error: debes ingresar un número.");
+                entrada.next(); 
+                continue;
+            }
 
             int fase = entrada.nextInt();
+            entrada.nextLine(); 
+
             switch (fase) {
                 case 1:
                     f1.ejecutar();
@@ -45,3 +59,4 @@ public class ControllerFases {
         }
     }
 }
+
